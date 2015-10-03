@@ -1,0 +1,42 @@
+{
+  "apps": [
+    {
+      "name": "market-report",
+      "script": "server.js",
+      "env": {
+        "COMMON_ENV_VAR": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "root",
+      "host": "45.32.11.80",
+      "repo": "git@github.com:gongzili456/android-market-report.git",
+      "ref": "origin/master",
+      "path": "/var/www/market-pro",
+      "post-deploy": "npm install && bower --allow-root install && gulp && pm2 startOrRestart deploy.json --env dev --node-args='--harmony'",
+      "pre-deploy-local": "echo 'Start to deploy.'",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 9200
+      }
+    },
+    "dev": {
+      "user": "root",
+      "host": "45.32.11.80",
+      "repo": "git@github.com:gongzili456/android-market-report.git",
+      "ref": "origin/master",
+      "path": "/var/www/market-dev",
+      "post-deploy": "npm install && bower --allow-root install && gulp && pm2 startOrRestart deploy.json --env dev --node-args='--harmony'",
+      "pre-deploy-local": "echo 'Start to deploy.'",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 9200
+      }
+    }
+  }
+}

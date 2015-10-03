@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>BangZhu - 后台管理</title>
+
+  <link rel="stylesheet" href="/build/css/mbs.css">
+  <link rel="stylesheet" href="/build/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/build/css/main.css">
+</head>
+<body ng-app="signApp">
+
+<!-- content -->
+<div class="container" ui-view>
+
+
+</div>
+<!-- end content -->
+<script src="/build/js/jquery.min.js"></script>
+<script src="/build/js/angular.min.js"></script>
+<script src="/build/js/angular-ui-router.min.js"></script>
+<script src="/build/js/common.js"></script>
+</body>
+</html>
+
+
+<script>
+  angular.module('signApp', ['ui.router'])
+    .controller('signController', function ($scope, $http) {
+
+      $scope.login = {};
+      $scope.error = false;
+
+      $scope.doLogin = function () {
+
+        if (!$scope.login.email) {
+          console.log('email error');
+          $scope.error = '请输入正确的Email';
+          return;
+        }
+
+        if (!$scope.login.password || $scope.login.password.length <= 0) {
+          $scope.error = '请输入密码';
+          return;
+        }
+
+        $http.post('/login', {
+          email: $scope.login.email,
+          password: $scope.login.password
+        }).then(function(res) {
+          if (res.data.status !== 200) {
+            $scope.error = res.data.message;
+          } else {
+            location.href = '/'
+          }
+        });
+      }
+
+    }).controller('signupController', function ($scope, $http) {
+          $scope.register = {{register|json|safe}};
+
+      $scope.error = false;
+
+
+      $scope.doRegister = function () {
+
+        $http.post('/register', {
+          email: $scope.register.email,
+          name: $scope.register.name,
+          password: $scope.register.password
+        }).then(function (res) {
+          if (res.data.status !== 200) {
+            $scope.error = res.data.message;
+          } else {
+            location.href = '/'
+          }
+        })
+
+      };
+
+    }).controller('modifyController', function ($scope, $http) {
+
+    $scope.modify = {{modify|json|safe}};
+
+  $scope.error = false;
+
+  $scope.doModify = function () {
+
+    if (!$scope.modify.password && !$scope.modify.confirm) {
+      console.log('password error');
+      $scope.error = '请填写密码';
+      return;
+    }
+
+    if ($scope.modify.password !== $scope.modify.confirm) {
+      console.log('password error');
+      $scope.error = '两次密码不匹配';
+      return;
+    }
+
+    if (!$scope.modify.code) {
+      console.log('code error');
+      $scope.error = '请填写验证码';
+      return;
+    }
+
+    $http.post('/modify_pass', {
+      phone: $scope.modify.phone,
+      password_confirm: $scope.modify.confirm,
+      password: $scope.modify.password
+    }).then(function (res) {
+      if (res.data.status !== 200) {
+        $scope.error = res.data.message;
+      } else {
+        location.href = '/'
+      }
+    })
+
+  };
+
+  }).config(function ($stateProvider, $urlRouterProvider) {
+
+      $urlRouterProvider.otherwise('/login');
+
+      $stateProvider.state('login', {
+        url: '/login',
+        controller: 'signController',
+        templateUrl: '/views/login/login.html'
+      }).state('register', {
+        url: '/register',
+        controller: 'signupController',
+        templateUrl: '/views/login/register.html'
+      }).state('modify', {
+        url: '/modify',
+        controller: 'modifyController',
+        templateUrl: '/views/login/modify.html'
+      });
+
+    });
+</script>

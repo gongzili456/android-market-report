@@ -1,0 +1,45 @@
+// Scaffolding
+// --------------------------------------------------
+ol,
+ul,
+p,
+dl,
+dt,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  color: @linkColor;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    color: @linkColor + #333;
+    text-decoration: none;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Lantinghei SC', 'Open Sans', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', 'STHeiti', 'WenQuanYi Micro Hei', SimSun, sans-serif;
+  color: @primaryColor;
+}
+
+// responsive image
+.m-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

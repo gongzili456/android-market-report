@@ -1,0 +1,33 @@
+{% extends '../layouts/layout.html' %}
+{% block content %}
+<div class="jumbotron" ng-app="homeApp" ng-controller="homeController">
+
+  <div class="container" >
+    <h1>欢迎回来！{{login_user.name}}</h1>
+
+    <span ng-if="status">点击上面的菜单，开始工作吧 ~~~ </span>
+    <span style="color: red" ng-if="unverify"> 你还没有 通过审核，请等待管理员的审核，以使用本站功能。 </span>
+
+    <p>^_^</p>
+
+  </div>
+
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+
+<script>
+
+  angular.module('homeApp', [])
+    .controller('homeController', function($scope, $http) {
+      $scope.users = {{login_user | json | safe}};
+  $scope.status = $scope.users.status ? false : true;
+
+  $scope.unverify = $scope.users.status ? true : false;
+  })
+
+
+</script>

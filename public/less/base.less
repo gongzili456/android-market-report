@@ -1,0 +1,359 @@
+body, html {
+  height: 100%;
+}
+
+// ellipsis text
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// custom switch
+.m-switch {
+  width: 52px;
+  height: 31px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #dfdfdf;
+  background-color: #fdfdfd;
+  box-shadow: #dfdfdf 0 0 0 0 inset;
+  border-radius: 20px;
+  background-clip: content-box;
+  display: inline-block;
+  -webkit-appearance: none;
+  user-select: none;
+  outline: none !important;
+  transition: border cubic-bezier(0, 0, 0, 1) .4s, box-shadow cubic-bezier(0, 0, 0, 1) .4s;
+  &:before {
+    content: '';
+    width: 29px;
+    height: 29px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    transition: left 0.3s;
+  }
+  &:checked {
+    box-shadow: #64bd63 0 0 0 16px inset;
+    background-color: #64bd63;
+    transition: border ease .4s, box-shadow ease .4s, background-color ease 1.2s;
+    border-color: #64bd63;
+    &:before {
+      left: 21px;
+      transition: left 0.3s;
+    }
+  }
+}
+
+// app header
+.app-header {
+  background-color: #ec2121;
+  height: 60px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 999;
+  .hn-logo {
+    float: left;
+    margin: 10px 10px 0 10px;
+    h1 {
+      text-indent: -9999em;
+      background-image: url();
+      width: 50px;
+      height: 37px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin: 0;
+    }
+  }
+  .hn-nav {
+    float: left;
+    margin-left: 10px;
+    li {
+      display: inline-block;
+      a {
+        display: inline-block;
+        height: 60px;
+        line-height: 60px;
+        color: #fff;
+        padding: 0 10px;
+        &.cur {
+          color: #ec2121;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.app-content {
+  position: relative;
+  padding-top: 60px;
+  > .content-inner {
+    padding-bottom: 40px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  > .app-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 15px;
+    border-top: 1px solid @borderColor;
+  }
+}
+
+// invitation
+.invitation {
+  .table {
+    > thead {
+      > tr {
+        > th {
+          padding: 15px 8px;
+          background-image: linear-gradient(#fafafa, #f7f7f7);
+          vertical-align: middle;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  .m-input {
+    display: inline-block;
+    height: 34px;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-color: transparent;
+    border-style: solid;
+    background-color: transparent;
+    outline: none;
+    transition: all .1s;
+    &:hover {
+      background-color: #eee;
+    }
+    &:focus {
+      border-color: #5cb85c;
+      background-color: #fff;
+    }
+  }
+  .invitation-list-search {
+    margin-bottom: 10px;
+    input {
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 6px 12px;
+      border: 1px solid #5cb85c;
+      outline: none;
+    }
+  }
+
+  .dis-block {
+    display: block;
+    margin-top: 5px;
+  }
+
+  .invitation-code {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    z-index: 9999;
+    background-color: #fff;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, .2);
+    .btn {
+      margin-top: 10px;
+    }
+  }
+}
+
+// visitors
+.visitors {
+  .table {
+    > thead {
+      > tr {
+        > th {
+          padding: 15px 8px;
+          background-image: linear-gradient(#fafafa, #f7f7f7);
+          vertical-align: middle;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  .visitor-list-search {
+    margin-bottom: 10px;
+    input {
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 6px 12px;
+      border: 1px solid #5cb85c;
+      outline: none;
+    }
+  }
+  .m-input {
+    display: inline-block;
+    height: 34px;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-color: transparent;
+    border-style: solid;
+    background-color: transparent;
+    outline: none;
+    transition: all .1s;
+    &:hover {
+      background-color: #eee;
+    }
+    &:focus {
+      border-color: #5cb85c;
+      background-color: #fff;
+    }
+  }
+}
+
+// visitors
+.users {
+  .table {
+    > thead {
+      > tr {
+        > th {
+          padding: 15px 8px;
+          background-image: linear-gradient(#fafafa, #f7f7f7);
+          vertical-align: middle;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        > td {
+          vertical-align: middle;
+        }
+      }
+      .avatar {
+        width: 40px;
+      }
+      .roles {
+        span {
+          display: inline-block;
+          padding: 1px 5px;
+          margin: 0 3px;
+          background-color: #3a87ad;
+          color: #fff;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+  .user-list-search {
+    margin-bottom: 10px;
+    input {
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 6px 12px;
+      border: 1px solid #5cb85c;
+      outline: none;
+    }
+  }
+  .m-input {
+    display: inline-block;
+    height: 34px;
+    padding: 6px 12px;
+    border: 1px solid #5cb85c;
+    outline: none;
+  }
+}
+
+tbody {
+  > tr {
+    > td {
+      word-break: break-all;
+      -ms-word-wrap: break-word;
+    }
+  }
+}
+
+// loading
+.loading {
+  padding: 10px 0;
+  margin: 0 auto;
+  width: 70px;
+  text-align: center;
+  > div {
+    width: 18px;
+    height: 18px;
+    background-color: #12bdc4;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out;
+    animation-fill-mode: both;
+    &.bounce1 {
+      animation-delay: -0.32s;
+    }
+    &.bounce2 {
+      animation-delay: -0.16s;
+    }
+  }
+}
+
+.navbar-brand {
+  font-size: 23px;
+  font-weight: bold;
+  color: snow;
+}
+
+.user-login {
+  font-size: larger;
+  font-weight: bold;
+  color: snow;
+}
+
+.jumbotron {
+  background-color: #FFFFFF;
+}
+
+.hideme {
+  display: none;
+}
+
+.showme {
+  display: block;
+}
+
+.hn-nav li a {
+  &:hover {
+    background-color: #eee;
+    color: #fa0000;
+  }
+}
+
+.pagination {
+  > a {
+    border-radius: 50px;
+  }
+}
+
+.label {
+  margin-left: 5px;
+}
+
