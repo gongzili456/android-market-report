@@ -10,9 +10,9 @@ export function *start(app) {
 
   //debug('1app: ', app.id, app.name, app.apk_name);
 
-  //let m = yield market360(app);
-  //let b = yield baidu(app);
-  //let w = yield wandoujia(app);
+  let m = yield market360(app);
+  let b = yield baidu(app);
+  let w = yield wandoujia(app);
   let x = yield xiaomi(app);
 
 }
