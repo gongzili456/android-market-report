@@ -5,6 +5,8 @@ import load from './crawler';
 import {MarketApp, Download, Comment} from '../app/models';
 import _ from 'lodash';
 import wait from 'co-wait';
+import cheerio from 'cheerio';
+
 
 export function *start(app) {
 
@@ -25,6 +27,14 @@ export function *start(app) {
     debug('2=========================   4   ==============');
     yield wandoujia(app);
 
+  } else if (app.market_id === 9) {
+
+    debug('2=========================   9   ==============');
+    yield huawei(app);
+  } else if (app.market_id === 12) {
+
+    debug('2=========================   12   ==============');
+    yield sougou(app);
   }
 
   debug('\n\n\n');
@@ -86,7 +96,7 @@ function *wandoujia(app) {
   let data = body.entity;
 
   let filter = _.filter(data, (a) => {
-    return a.id !== 0 && a.detail.app_detail.package_name === app.apk_name;
+    return a.detail !== undefined && a.detail.app_detail.package_name === app.apk_name;
   });
 
   if (filter.length <= 0) {
@@ -108,6 +118,46 @@ function *wandoujia(app) {
   let down = Download.build({
     market_app_id: app.id,
     download_total: app_data.downloadCount
+  });
+
+  yield down.save();
+}
+
+function *huawei(app) {
+  let url = `http://appstore.huawei.com:80/app/${app.m_app_id}`;
+
+  let body = yield load(url);
+
+  let $ = cheerio.load(body);
+
+  let down_tag = $('ul.app-info-ul span.sub').text();
+
+  let download_count = down_tag.replace(/[^0-9]/ig, "");
+
+  let down = Download.build({
+    market_app_id: app.id,
+    download_total: download_count - 0
+  });
+
+  yield down.save();
+}
+
+function *sougou(app) {
+
+  let url = `http://mobile.zhushou.sogou.com/m/appDetail.html?id=${app.m_app_id}`;
+
+  let body = yield load(url);
+
+  let data = body.ainfo;
+
+  if (app.apk_name !== data.pname) {
+    debug('apk_name error: ', app.apk_name, data.pname);
+    return;
+  }
+
+  let down = Download.build({
+    market_app_id: app.id,
+    download_total: data.dc - 0
   });
 
   yield down.save();

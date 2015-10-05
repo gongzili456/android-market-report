@@ -115,6 +115,9 @@ function *additionalParams(data, market_id) {
     case 5:
       additional = yield xiaomi(data);
       break;
+    case 9:
+      additional = yield huawei(data);
+      break;
     case 12:
       additional = yield sougou(data);
       break;
@@ -181,6 +184,13 @@ function *sougou(data) {
     m_app_id: data.appid,
     current_version: data.version,
     current_version_code: data.versioncode
+  }
+}
+
+function *huawei(data) {
+  return {
+    m_app_id: data.id,
+    current_version: data.version
   }
 }
 

@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel": "^5.6.23",
+    "cheerio": "^0.19.0",
     "co": "^4.6.0",
     "co-body": "^4.0.0",
     "co-limiter": "^1.0.3",

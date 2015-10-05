@@ -6,6 +6,7 @@ var parse = require('co-body');
 import redis from '../../lib/redis';
 import crypto from 'crypto';
 import _ from 'lodash';
+import cheerio from 'cheerio';
 
 import request from 'co-request';
 
@@ -32,7 +33,8 @@ export function *doSearch() {
     baidu(app_name),
     wandoujia(app_name),
     xiaomi(app_name),
-    sougou(app_name)
+    sougou(app_name),
+    huawei(app_name)
   ];
 
   let list = _.flatten(_.compact(result));
@@ -256,4 +258,59 @@ function *sougou(name) {
       data: app
     }
   });
+}
+
+function *huawei(name) {
+  let url = `http://appstore.huawei.com/search/${encodeURIComponent(name)}`;
+
+  debug('url: ', url);
+
+  let result = yield request(url);
+
+  let body = result.body;
+
+  let $ = cheerio.load(body);
+
+  let list_app_div = $('div.unit-main div.list-game-app');
+
+  debug('list div: ', list_app_div.length);
+
+  var apps = [];
+
+
+  $('div.unit-main div.list-game-app').each(function (i, ele) {
+    if (!$(this).hasClass('nofloat')) {
+      return;
+    }
+
+    let icon = $(this).find('.game-info-ico img.app-ico').attr('lazyload');
+
+    let down = $(this).find('a.down').attr('onclick');
+
+    //zhytools.downloadApp('C10322406','Viadeo','search_dl','26','社交通讯','http://122.11.38.214/dl/appdl/application/apk/64/6401392fcae2403ea1c723e8bdd79ea0/com.viadeo.android.1508071107.apk?sign=portal@portal1444040375864&source=portalsite','3.3.5');
+    let sub_str = down.substring(down.indexOf('(') + 1, down.indexOf(')'));
+
+    let sub_arr = sub_str.split(',');
+
+    let apk_name_pre = sub_arr[5];
+    let apk_name_pp = apk_name_pre.substring(apk_name_pre.lastIndexOf('/') + 1, apk_name_pre.indexOf('.apk'));
+    let apk_name = apk_name_pp.substring(0, apk_name_pp.lastIndexOf('.'));
+    debug('apk_name: ', apk_name);
+
+
+    apps.push({
+      icon: icon,
+      name: sub_arr[1],
+      apk_name: apk_name,
+      market_id: 9,
+      market_name: '华为市场',
+      data: {
+        id: _.trim(sub_arr[0], '\''),
+        version: sub_arr[6]
+      }
+    })
+
+  });
+
+  return apps;
 }
