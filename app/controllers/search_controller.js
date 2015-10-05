@@ -84,12 +84,7 @@ function *market360(name) {
 
   debug('url: ', url);
 
-  let result = yield request(url);
-  let body = result.body;
-
-  if (typeof body === 'string') {
-    body = JSON.parse(body);
-  }
+  let body = yield load(url);
 
   let data = body.data.app.data;
 
@@ -119,12 +114,7 @@ function *baidu(name) {
 
   debug('url: ', url);
 
-  let result = yield request(url);
-  let body = result.body;
-
-  if (typeof body === 'string') {
-    body = JSON.parse(body);
-  }
+  let body = yield load(url);
 
   let data = body.result.data;
 
@@ -160,12 +150,7 @@ function *wandoujia(name) {
 
   debug('url: ', url);
 
-  let result = yield request(url);
-  let body = result.body;
-
-  if (typeof body === 'string') {
-    body = JSON.parse(body);
-  }
+  let body = yield load(url);
 
   let data = body.entity;
 
@@ -194,12 +179,7 @@ function *xiaomi(name) {
 
   debug('url: ', url);
 
-  let result = yield request(url);
-  let body = result.body;
-
-  if (typeof body === 'string') {
-    body = JSON.parse(body);
-  }
+  let body = yield load(url);
 
   let data = body.listApp;
 
@@ -230,12 +210,7 @@ function *sougou(name) {
 
   debug('url: ', url);
 
-  let result = yield request(url);
-  let body = result.body;
-
-  if (typeof body === 'string') {
-    body = JSON.parse(body);
-  }
+  let body = yield load(url);
 
   let data = body.mix.list;
 
@@ -313,4 +288,30 @@ function *huawei(name) {
   });
 
   return apps;
+}
+
+
+function *load() {
+
+  let result = yield request({
+    uri: url,
+    gzip: true,
+    maxSocket: 50,
+    timeout: 20000
+  });
+
+  let body = result.body;
+
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body);
+    }
+    catch (ex) {
+      console.log('JSON parse error');
+      throw('Server Error.');
+    }
+
+  }
+
+  return body;
 }
