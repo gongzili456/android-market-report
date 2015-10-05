@@ -291,7 +291,7 @@ function *huawei(name) {
 }
 
 
-function *load() {
+function *load(url) {
 
   let result = yield request({
     uri: url,
