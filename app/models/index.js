@@ -12,8 +12,7 @@ var sequelize = new Sequelize(database, username, password, {
   dialectOptions: {
     charset: 'utf8mb4'
   },
-  collate: 'utf8_general_ci',
-  timezone: "+08:00"
+  collate: 'utf8_general_ci'
 });
 var db = {};
 

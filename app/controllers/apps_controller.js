@@ -41,10 +41,10 @@ export function *addApp() {
 
   let user = this.session.user;
 
-  if (!attr.name || !attr.apk_name || !attr.icon || !attr.market_id) {
+  if (!attr.name || !attr.apk_name || !attr.icon || !attr.data_list) {
     return this.body = {
       status: 400,
-      message: 'The parameters name, apk_name, icon, market_id is required.'
+      message: 'The parameters name, apk_name, icon, data_list is required.'
     }
   }
 
@@ -66,38 +66,38 @@ export function *addApp() {
     yield exist.save();
   }
 
-  let market_app = yield MarketApp.find({
-    where: {
-      app_id: exist.id,
-      market_id: attr.market_id
+  for (let data of attr.data_list) {
+
+    let market_app = yield MarketApp.find({
+      where: {
+        app_id: exist.id,
+        market_id: data.market_id
+      }
+    });
+
+    if (!market_app) {
+      let additional = yield additionalParams(data.data, data.market_id);
+
+      market_app = MarketApp.build(assign({
+        app_id: exist.id,
+        apk_name: exist.apk_name,
+        app_name: exist.name
+      }, additional));
+
+      yield market_app.save();
     }
-  });
 
-  if (!market_app) {
-    let additional = yield additionalParams(attr.data, attr.market_id);
-
-    market_app = MarketApp.build(assign({
-      app_id: exist.id,
-      apk_name: exist.apk_name,
-      app_name: exist.name
-    }, additional));
-
-    yield market_app.save();
+    yield user.removeApp(exist.id);
+    yield user.addApp(exist.id);
   }
 
-  debug('market_app: ', market_app);
-
-  yield user.removeApp(exist.id);
-  yield user.addApp(exist.id);
 
   this.body = {
     status: 200,
     data: exist
   }
 
-
 }
-
 
 function *additionalParams(data, market_id) {
   var additional = {};
@@ -115,10 +115,13 @@ function *additionalParams(data, market_id) {
     case 5:
       additional = yield xiaomi(data);
       break;
+    case 12:
+      additional = yield sougou(data);
+      break;
   }
 
   return assign(additional, {
-    market_id: market_id,
+    market_id: market_id
   });
 }
 
@@ -173,6 +176,14 @@ function *xiaomi(data) {
   }
 }
 
+function *sougou(data) {
+  return {
+    m_app_id: data.appid,
+    current_version: data.version,
+    current_version_code: data.versioncode
+  }
+}
+
 export function *delApp() {
   let id = this.params.id;
 
@@ -198,4 +209,4 @@ export function *delApp() {
     data: app
   }
 }
-``
+

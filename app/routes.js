@@ -26,6 +26,7 @@ export default ()=> {
   /**
    * Search router
    */
+  router.get('/searchapp', controllers.search_controller.toSearch);
   router.get('/search', controllers.search_controller.doSearch);
 
   /**

@@ -1,0 +1,45 @@
+<div class="invitation-list-search">
+  <form class="form-inline" role="search" ng-submit="doSearch()">
+    <div class="form-group dis-block">
+      <input type="text" placeholder="输入 APP 的名字搜索" ng-model="keyword">
+    </div>
+    <!--<button type="submit" class="btn btn-default">搜索</button>-->
+  </form>
+</div>
+
+
+<table class="table table-bordered table-striped" ng-if="apps.length">
+  <thead>
+  <tr>
+    <th width="5%">图标</th>
+    <th width="20%">名称</th>
+    <th width="30%">包名</th>
+    <th width="30%">市场</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="item in apps | orderBy:'-market_names.length'">
+    <td><img style="height: 50px;width: 50px;" src="{{item.icon}}"></td>
+    <td>{{item.name}}</td>
+    <td>{{item.apk_name}}</td>
+    <td><span class="label label-success" ng-repeat="name in item.market_names">{{name}}</span></td>
+    <td>
+      <button class="btn btn-primary" ng-click="add(item)">添加</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<div ng-if="search_none">
+
+  <h2>没有搜索结果。。。</h2>
+
+</div>
+
+<div class="info-icons" ng-if="loading">
+
+  <i class="fa fa-spinner fa-pulse fa-6" style="font-size: 150px"></i>
+
+</div>

@@ -1,9 +1,8 @@
-<a class="btn btn-primary btn-lg pull-right" style="margin-top:5px; margin-bottom: 5px;" href="#/search">添加应用</a>
 
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
-    <th>ID</th>
+    <th>#</th>
     <th>图标</th>
     <th>名称</th>
     <th>包名</th>
@@ -15,7 +14,7 @@
   </thead>
   <tbody>
   <tr ng-repeat="item in apps">
-    <td>{{item.id}}</td>
+    <td>{{$index + 1}}</td>
     <td><img style="height: 50px;width: 50px;" src="{{item.icon}}"></td>
     <td>{{item.name}}</td>
     <td>{{item.apk_name}}</td>

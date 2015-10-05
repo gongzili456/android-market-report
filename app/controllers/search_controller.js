@@ -9,11 +9,11 @@ import _ from 'lodash';
 
 import request from 'co-request';
 
-var debug = require('debug')('bz:app:controllers:sign:');
+var debug = require('debug')('bz:app:controllers:search:');
 
 export function *toSearch() {
 
-  this.body = yield this.render('');
+  this.body = yield this.render('search/index');
 }
 
 export function *doSearch() {
@@ -31,12 +31,48 @@ export function *doSearch() {
     market360(app_name),
     baidu(app_name),
     wandoujia(app_name),
-    xiaomi(app_name)
+    xiaomi(app_name),
+    sougou(app_name)
   ];
+
+  let list = _.flatten(_.compact(result));
+
+  let group = _.groupBy(list, (res) => {
+    return res.apk_name;
+  });
+
+
+  let keys = Object.keys(group);
+
+  var final_result = [];
+
+  for (let key of keys) {
+
+    let values = group[key];
+
+    let obj = {
+      icon: values[0].icon,
+      name: values[0].name,
+      apk_name: values[0].apk_name,
+      market_names: [],
+      data_list: []
+    };
+
+    _.map(values, (v) => {
+      obj.data_list.push({
+        market_id: v.market_id,
+        data: v.data
+      });
+
+      obj.market_names.push(v.market_name);
+    });
+
+    final_result.push(obj);
+  }
 
   this.body = {
     status: 200,
-    data: result
+    data: final_result
   };
 }
 
@@ -94,7 +130,7 @@ function *baidu(name) {
     var index = -1;
     try {
       index = a.itemdata.sname.toLowerCase().indexOf(name.toLowerCase()) >= 0;
-    } catch(err) {
+    } catch (err) {
       console.log('a.sname: ', a.sname, url);
     }
     return index;
@@ -132,7 +168,7 @@ function *wandoujia(name) {
   let data = body.entity;
 
   let filter = _.filter(data, (a) => {
-    return a.id !== 0 && a.detail.app_detail.title.toLowerCase().indexOf(name.toLowerCase()) >= 0;
+    return a.detail !== undefined && a.detail.app_detail.title.toLowerCase().indexOf(name.toLowerCase()) >= 0;
   });
 
   if (filter.length <= 0) {
@@ -180,6 +216,43 @@ function *xiaomi(name) {
       apk_name: app.packageName,
       market_name: '小米应用商店',
       market_id: 5,
+      data: app
+    }
+  });
+}
+
+
+function *sougou(name) {
+
+  let url = `http://mobile.zhushou.sogou.com/android/search.html?groupid=mix&limit=20&start=0&keyword=${encodeURIComponent(name)}`;
+
+  debug('url: ', url);
+
+  let result = yield request(url);
+  let body = result.body;
+
+  if (typeof body === 'string') {
+    body = JSON.parse(body);
+  }
+
+  let data = body.mix.list;
+
+
+  let filter = _.filter(data, (a) => {
+    return decodeURIComponent(a.name).toLowerCase().indexOf(name.toLowerCase()) >= 0;
+  });
+
+  if (filter.length <= 0) {
+    return;
+  }
+
+  return _.map(filter, (app) => {
+    return {
+      icon: decodeURIComponent(app.icon),
+      name: decodeURIComponent(app.name),
+      apk_name: app.packagename,
+      market_name: '搜狗手机助手',
+      market_id: 12,
       data: app
     }
   });

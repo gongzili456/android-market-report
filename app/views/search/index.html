@@ -1,62 +1,13 @@
 {% extends '../layouts/layout.html' %}
 {% block content %}
-<div class="invitation" ng-app="appListApp" ui-view></div>
+<div class="invitation" ng-app="appSearchApp" ui-view></div>
 {% endblock %}
 
 {% block js %}
 
 <script>
 
-  angular.module('appListApp', ['ui.router'])
-    .controller('appListController', function($scope, $http) {
-      $scope.apps = {{apps | json | safe}};
-
-
-      $scope.delete = function (app) {
-        $http.delete('/apps/' + app.id).then(function(res) {
-
-          if (res.data.status === 200) {
-
-            $.notify("删除成功", {
-              type: 'success',
-              placement: {
-                from: 'bottom',
-                align: 'left'
-              },
-              animate:{
-                enter: "animated fadeInUp",
-                exit: "animated fadeOutDown"
-              }
-            });
-
-            $scope.apps.forEach((a, i) => {
-              if (a.id == app.id) {
-                $scope.apps.splice(i, 1);
-              }
-            });
-
-
-          } else {
-            $.notify('<strong>' + res.data.data.message + '</strong> ' ,{
-              type: 'success',
-              placement: {
-                from: 'bottom',
-                align: 'left'
-              },
-              animate:{
-                enter: "animated fadeInUp",
-                exit: "animated fadeOutDown"
-              }
-            });
-          }
-
-
-        })
-      };
-
-      $scope.list_none = $scope.apps.length > 0 ? false : true;
-
-  }).controller('searchController', function($scope, $http) {
+  angular.module('appSearchApp', ['ui.router']).controller('searchController', function($scope, $http) {
 
     $scope.keyword = "";
     $scope.apps = [];
@@ -129,16 +80,12 @@
 
     }
   }).config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/list');
+    $urlRouterProvider.otherwise('/search');
 
-    $stateProvider.state('list', {
-      url: '/list',
-      controller: 'appListController',
-      templateUrl: '/views/apps/list.html'
-    }).state('search', {
+    $stateProvider.state('search', {
       url: '/search',
       controller: 'searchController',
-      templateUrl: '/views/apps/create.html'
+      templateUrl: '/views/search/create.html'
     });
   });
 
