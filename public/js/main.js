@@ -3,9 +3,16 @@
   var $headerNavs = $('ul.nav li');
   $headerNavs.each(function() {
     var url = win.location.href;
+
+    if (url.indexOf('#') >= 0) {
+      url = url.substring(0, url.indexOf('#'));
+    }
+
     url = url.substring(url.lastIndexOf('/'));
+
     var link = $(this).find('a').attr('href');
-    if (url ===link) {
+
+    if (url === link) {
       $(this).addClass('active');
     }
   });

@@ -56,78 +56,6 @@
 
       $scope.list_none = $scope.apps.length > 0 ? false : true;
 
-  }).controller('searchController', function($scope, $http) {
-
-    $scope.keyword = "";
-    $scope.apps = [];
-    $scope.search_none = false;
-    $scope.loading = false;
-
-    $scope.doSearch = function() {
-      console.log("key: ", $scope.keyword);
-
-      $scope.apps = [];
-      $scope.search_none = false;
-      $scope.loading = true;
-
-      $http.get('/search?q=' + $scope.keyword).then(function(res) {
-
-        console.log(res.data);
-
-        $scope.loading = false;
-
-        $scope.apps = res.data.data;
-
-        if ($scope.apps.length <= 0) {
-          $scope.search_none = true;
-        } else {
-          $scope.search_none = false;
-        }
-      });
-    };
-
-    $scope.add = function(item) {
-      console.log('item: ', item);
-
-      $http.post('/apps', {
-        name: item.name,
-        apk_name: item.apk_name,
-        icon: item.icon,
-        market_id: item.market_id,
-        data_list: item.data_list
-      }).then(function(res) {
-        if (res.data.status === 200) {
-
-          $.notify('<img style="height: 50px;width: 50px;" src="' + res.data.data.icon +'"> <strong>添加成功</strong> ',
-            {
-              type: 'success',
-              placement: {
-                from: 'bottom',
-                align: 'left'
-              },
-              animate:{
-                enter: "animated fadeInUp",
-                exit: "animated fadeOutDown"
-              }
-            }
-          );
-
-        } else {
-          $.notify('<strong>' + res.data.data.message + '</strong> ', {
-            type: 'success',
-            placement: {
-              from: 'bottom',
-              align: 'left'
-            },
-            animate:{
-              enter: "animated fadeInUp",
-              exit: "animated fadeOutDown"
-            }
-          });
-        }
-      });
-
-    }
   }).config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/list');
 
@@ -135,10 +63,6 @@
       url: '/list',
       controller: 'appListController',
       templateUrl: '/views/apps/list.html'
-    }).state('search', {
-      url: '/search',
-      controller: 'searchController',
-      templateUrl: '/views/apps/create.html'
     });
   });
 

@@ -28,7 +28,7 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 // Launch BrowserSync development server
-gulp.task('sync', function () {
+gulp.task('sync', function() {
   browserSync({
     files: [
       './app/views/**/*.html',
@@ -43,7 +43,7 @@ gulp.task('sync', function () {
   gulp.watch(PUBLIC + 'js/*.js', ['js']);
 });
 
-gulp.task('bower_libs', function () {
+gulp.task('bower_libs', function() {
   gulp.src([
     BOWER_COMPONENTS + 'angular/angular.min.js',
     BOWER_COMPONENTS + 'angular/angular.min.js.map',
@@ -55,13 +55,11 @@ gulp.task('bower_libs', function () {
   ]).pipe(gulp.dest(BUILD + 'js'));
   gulp.src(BOWER_COMPONENTS + 'fontawesome/css/font-awesome.min.css')
     .pipe(gulp.dest(BUILD + 'css'));
-  gulp.src(BOWER_COMPONENTS + 'remarkable-bootstrap-notify/dist/animate.css')
-    .pipe(gulp.dest(BUILD + 'css'));
   return gulp.src(BOWER_COMPONENTS + 'fontawesome/fonts/*')
     .pipe(gulp.dest(BUILD + 'fonts'));
 });
 
-gulp.task('images', function () {
+gulp.task('images', function() {
   return gulp.src(PUBLIC + 'images/*')
     .pipe(gulp.dest(BUILD + 'images'));
 });
@@ -76,7 +74,7 @@ gulp.task('images:minify', function () {
     .pipe(gulp.dest(BUILD + 'images'));
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', function() {
   return gulp.src([
     PUBLIC + 'less/main.less',
     PUBLIC + 'less/application.less',
@@ -90,7 +88,7 @@ gulp.task('styles', function () {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('styles:minify', function () {
+gulp.task('styles:minify', function() {
   return gulp.src([
     BUILD + 'css/main.css',
     BUILD + 'css/application.css',
@@ -100,31 +98,31 @@ gulp.task('styles:minify', function () {
     .pipe(gulp.dest(BUILD + 'css'));
 });
 
-gulp.task('js', function () {
+gulp.task('js', function() {
   return gulp.src([
     PUBLIC + 'js/toolkit.js',
-    PUBLIC + 'js/application.js',
-    PUBLIC + 'js/main.js'
+    PUBLIC + 'js/*.js',
+    PUBLIC + 'js/*.js'
   ])
     .pipe($.concat('common.js'))
     .pipe(gulp.dest(BUILD + 'js'))
     .pipe(reload({stream: true}));
 });
 
-gulp.task('js:minify', function () {
+gulp.task('js:minify', function() {
   return gulp.src(BUILD + 'js/common.js')
     .pipe($.uglify())
     .pipe(gulp.dest(BUILD + 'js'));
 });
 
-gulp.task('mbs', function () {
+gulp.task('mbs', function() {
   return gulp.src(PUBLIC + 'less/mbs/mbs.less')
     .pipe($.less())
     .pipe($.minifyCss({keepBreaks: false}))
     .pipe(gulp.dest(BUILD + 'css'));
 });
 
-gulp.task('mbs:minify', function () {
+gulp.task('mbs:minify', function() {
   return gulp.src(BUILD + 'css/mbs.css')
     .pipe($.minifyCss())
     .pipe(gulp.dest(BUILD + 'css'));
@@ -132,7 +130,7 @@ gulp.task('mbs:minify', function () {
 
 var started = false;
 // Launch a Node.js/Express server
-gulp.task('server', ['build'], function (cb) {
+gulp.task('server', ['build'], function(cb) {
   src.server = [
     './server.js',
     './app/**/*.js'
@@ -147,14 +145,14 @@ gulp.task('server', ['build'], function (cb) {
         NODE_ENV: process.env.NODE_ENV || 'development'
       }
     });
-    child.once('message', function (message) {
+    child.once('message', function(message) {
       if (message.match(/^online$/)) {
         if (browserSync) {
           reload();
         }
         if (!started) {
           started = true;
-          gulp.watch(src.server, function () {
+          gulp.watch(src.server, function() {
             $.util.log('Restarting development server.');
             server.kill('SIGTERM');
             server = startup();
@@ -166,13 +164,13 @@ gulp.task('server', ['build'], function (cb) {
     return child;
   })();
 
-  process.on('exit', function () {
+  process.on('exit', function() {
     server.kill('SIGTERM');
   });
 });
 
 // Build the app
-gulp.task('build', function () {
+gulp.task('build', function() {
   if (DEBUG) {
     runSequence(['bower_libs', 'images', 'styles', 'mbs', 'js'], 'sync');
   } else {

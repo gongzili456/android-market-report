@@ -39,7 +39,9 @@
           <td>{{item.apk_name}}</td>
           <td><span class="label label-success" ng-repeat="name in item.market_names">{{name}}</span></td>
           <td>
-            <button class="btn btn-primary" ng-click="add(item)">添加</button>
+            <button class="btn btn-primary" ng-click="add(item)">
+              <span>添加</span>
+            </button>
           </td>
         </tr>
         </tbody>
