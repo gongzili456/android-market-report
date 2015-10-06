@@ -12,7 +12,7 @@
   <div class="akg ue">
     <div class="akh aki">
       <div class="tn aol" style="width: 100%">
-        <input type="text" class="form-control aqq" placeholder="Search your apps" style="width: 100%">
+        <input type="text" class="form-control aqq" placeholder="Search your apps" style="width: 100%" ng-model="keyword">
         <i class="fa fa-search bv"></i>
       </div>
     </div>
@@ -34,7 +34,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in apps">
+        <tr ng-repeat="item in apps | filter:keyword">
           <td>{{$index + 1}}</td>
           <td><img style="height: 50px;width: 50px;" src="{{item.icon}}"></td>
           <td>{{item.name}}</td>
