@@ -275,7 +275,7 @@ function *huawei(name) {
 
     apps.push({
       icon: icon,
-      name: sub_arr[1],
+      name: _.trim(sub_arr[1], '\''),
       apk_name: apk_name,
       market_id: 9,
       market_name: '华为市场',
