@@ -1,18 +1,62 @@
 {% extends '../layouts/layout.html' %}
 {% block content %}
-<div class="jumbotron" ng-app="homeApp" ng-controller="homeController">
+<div class="hc aps" ng-app="homeApp" ng-controller="homeController">
+  <div class="apa">
+    <div class="apb">
+      <h6 class="apd">Dashboards</h6>
 
-  <div class="container" >
-    <h1>欢迎回来！{{login_user.name}}</h1>
+      <h2 class="apc">Order history</h2>
+    </div>
 
-    <span ng-if="status">点击上面的菜单，开始工作吧 ~~~ </span>
-    <span style="color: red" ng-if="unverify"> 你还没有 通过审核，请等待管理员的审核，以使用本站功能。 </span>
-
-    <p>^_^</p>
-
+    <div class="ob ape">
+      <div class="tn aol">
+        <input type="text" value="01/01/15 - 01/08/15" class="form-control" data-provide="datepicker">
+        <span class="bv wt"></span>
+      </div>
+    </div>
   </div>
 
+  <div class="akg ue">
+    <div class="akh aki">
+      <div class="tn aol">
+        <input type="text" class="form-control aqq" placeholder="Search orders">
+        <span class="bv adn"></span>
+      </div>
+    </div>
+    <div class="akh">
+      <div class="nz">
+        <button type="button" class="ce apn">
+          <span class="bv aez"></span>
+        </button>
+        <button type="button" class="ce apn">
+          <span class="bv zz"></span>
+        </button>
+      </div>
+    </div>
+  </div>
 
+  <div class="ud">
+    <div class="eg">
+      <table class="cl">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Id</th>
+          <th>Id</th>
+          <th>Id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
@@ -22,8 +66,12 @@
 <script>
 
   angular.module('homeApp', [])
-    .controller('homeController', function($scope, $http) {
-      $scope.users = {{login_user | json | safe}};
+    .controller('homeController', function ($scope, $http) {
+      $scope.users = {
+      {
+        login_user | json | safe
+      }
+    };
   $scope.status = $scope.users.status ? false : true;
 
   $scope.unverify = $scope.users.status ? true : false;

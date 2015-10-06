@@ -16,59 +16,82 @@
   <link rel="stylesheet" href="/build/css/font-awesome.min.css">
   <link rel="stylesheet" href="/build/css/main.css">
   <link rel="stylesheet" href="/build/css/animate.css">
+  <link rel="stylesheet" href="/build/css/toolkit-inverse.css">
+  <link rel="stylesheet" href="/build/css/application.css">
+
+  <style>
+    /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+    /* this chunk of css is not part of the toolkit :) */
+    body {
+      width: 1px;
+      min-width: 100%;
+      *width: 100%;
+    }
+  </style>
 </head>
 
-<header class="app-header">
+<div class="aou">
 
-  <nav class="navbar header-navbar clearfix">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">Market</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse menu">
-        <ul class="nav navbar-nav hn-nav">
-          <li><a href="/apps/">我的应用</a></li>
-          <li><a href="/searchapp">添加应用</a></li>
-        </ul>
+  <nav class="ch">
+
+    <a class="aov" href="../index.html">
+      <span class="aow">M</span>
+    </a>
 
 
+    <div class="aoz">
 
-        <ul class="nav navbar-nav navbar-right user-login">
-          <li><a href="#">{{login_user.name}}</a></li>
-          <li><a href="/signout">退出</a></li>
-        </ul>
-      </div>
-      <!--/.nav-collapse -->
+      <ul class="nav of aox">
+        <li>
+          <a href="/" title="Overview" data-toggle="tooltip" data-placement="right"
+             data-container="body">
+            <i class="fa fa-home"></i>
+            <small class="aoy sa"> 首页</small>
+          </a>
+        </li>
+        <li>
+          <a href="/apps" title="Overview" data-toggle="tooltip" data-placement="right"
+             data-container="body">
+            <i class="fa fa-list"></i>
+            <small class="aoy sa">我关注的 APP</small>
+          </a>
+        </li>
+        <li>
+          <a href="/searchapp" title="Order history" data-toggle="tooltip"
+             data-placement="right" data-container="body">
+            <i class="fa fa-plus"></i>
+            <small class="aoy sa">添加关注</small>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav of aox">
+        <li>
+          <a href="#" title="Signed in as mdo" data-toggle="tooltip" data-placement="right"
+             data-container="body">
+            <img src="../assets/img/avatar-mdo.png" alt="" class="cs cn">
+            <small class="aoy sa">@mdo</small>
+          </a>
+        </li>
+      </ul>
     </div>
-    <!--/.container-fluid -->
   </nav>
-</header>
-<!--end header-->
 
-<!-- content -->
-<section class="app-content">
-  <div class="content-inner">
+  <div class="bw">
+
     {% block content %}
 
     {% endblock %}
+
   </div>
-  <!-- footer -->
-  <footer class="app-footer">
-    <p class="copyright">Copyright &copy; 2015 Market Report</p>
-  </footer>
-  <!-- end footer -->
-</section>
-<!-- end content -->
+
+</div>
+
+
 <script src="/build/js/angular.min.js"></script>
 <script src="/build/js/angular-ui-router.min.js"></script>
 <script src="/build/js/jquery.min.js"></script>
+<script src="/build/js/jquery.tablesorter.min.js"></script>
 <script src="/build/js/bootstrap-notify.min.js"></script>
 <script src="/build/js/common.js"></script>
 {% block js %}

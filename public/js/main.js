@@ -1,11 +1,12 @@
 (function($, win, doc, undefined) {
   $('.app-content').css('minHeight', $(window).height());
-  var $headerNavs = $('.menu li a');
+  var $headerNavs = $('ul.nav li');
   $headerNavs.each(function() {
     var url = win.location.href;
-    var link = $(this).attr('href');
-    if (url.indexOf(link) != -1) {
-      $(this).addClass('cur');
+    url = url.substring(url.lastIndexOf('/'));
+    var link = $(this).find('a').attr('href');
+    if (url ===link) {
+      $(this).addClass('active');
     }
   });
 })(jQuery, window, document);
