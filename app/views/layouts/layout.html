@@ -3,15 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Market-Report</title>
-  <link rel="apple-touch-icon" sizes="57x57" href="/build/images/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/build/images/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/build/images/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/build/images/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/build/images/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/build/images/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/build/images/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/build/images/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/build/images/apple-icon-180x180.png">
   <link rel="stylesheet" href="/build/css/mbs.css">
   <link rel="stylesheet" href="/build/css/font-awesome.min.css">
   <link rel="stylesheet" href="/build/css/main.css">
@@ -43,21 +34,21 @@
 
       <ul class="nav of aox">
         <li>
-          <a href="/" title="Overview" data-toggle="tooltip" data-placement="right"
+          <a href="/" title="首页" data-toggle="tooltip" data-placement="right"
              data-container="body">
             <i class="fa fa-home"></i>
             <small class="aoy sa"> 首页</small>
           </a>
         </li>
         <li>
-          <a href="/apps" title="Overview" data-toggle="tooltip" data-placement="right"
+          <a href="/apps" title="我关注的 APP" data-toggle="tooltip" data-placement="right"
              data-container="body">
             <i class="fa fa-list"></i>
             <small class="aoy sa">我关注的 APP</small>
           </a>
         </li>
         <li>
-          <a href="/searchapp" title="Order history" data-toggle="tooltip"
+          <a href="/searchapp" title="添加关注" data-toggle="tooltip"
              data-placement="right" data-container="body">
             <i class="fa fa-plus"></i>
             <small class="aoy sa">添加关注</small>
@@ -67,10 +58,10 @@
 
       <ul class="nav of aox">
         <li>
-          <a href="#" title="Signed in as mdo" data-toggle="tooltip" data-placement="right"
+          <a href="#" title="{{login_user.name}}" data-toggle="tooltip" data-placement="right"
              data-container="body">
-            <img src="../assets/img/avatar-mdo.png" alt="" class="cs cn">
-            <small class="aoy sa">@mdo</small>
+            <img src="/build/images/android_user.png" alt="" class="cs cn">
+            <small class="aoy sa">@{{login_user.name}}</small>
           </a>
         </li>
       </ul>
