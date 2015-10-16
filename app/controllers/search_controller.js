@@ -263,7 +263,7 @@ function *huawei(name) {
     let down = $(this).find('a.down').attr('onclick');
 
     //zhytools.downloadApp('C10322406','Viadeo','search_dl','26','社交通讯','http://122.11.38.214/dl/appdl/application/apk/64/6401392fcae2403ea1c723e8bdd79ea0/com.viadeo.android.1508071107.apk?sign=portal@portal1444040375864&source=portalsite','3.3.5');
-    let sub_str = down.substring(down.indexOf('downloadApp(') + 1, down.indexOf(');'));
+    let sub_str = down.substring(down.indexOf('downloadApp(') + 12, down.lastIndexOf(');'));
 
     let sub_arr = sub_str.split(',');
 

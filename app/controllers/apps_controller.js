@@ -7,11 +7,7 @@ import _ from 'lodash';
 import assign from 'object-assign';
 import request from 'co-request';
 
-import * as InitTask from '../../task/init_market_app';
-
 var debug = require('debug')('bz:app:controllers:apps:');
-
-debug('initTask: ', InitTask);
 
 export function *appList() {
 

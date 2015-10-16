@@ -2,6 +2,7 @@
   "name": "dmc-admin",
   "version": "1.0.0",
   "dependencies": {
+    "echarts": "https://github.com/ecomfe/echarts.git#2.2.7",
     "fontawesome": "~4.3.0",
     "angular": "~1.4.4",
     "angular-ui-router": "~0.2.15",

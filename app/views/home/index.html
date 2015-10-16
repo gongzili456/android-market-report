@@ -1,18 +1,41 @@
 {% extends '../layouts/layout.html' %}
 {% block content %}
-<div class="hc aps" ng-app="homeApp" ng-controller="homeController">
+<div class="hc aps" ng-app="download_day_rpt_app" ng-controller="download_day_rpt_app_controller">
   <div class="apa">
     <div class="apb">
       <h6 class="apd">Dashboards</h6>
 
-      <h2 class="apc">欢迎回来</h2>
+      <h2 class="apc" style="color: black">每日下载量走势</h2>
+
+
     </div>
 
+  </div>
+
+  <div class="akg ue">
+    <div class="akh aki">
+      <div class="tn aol" style="width: 100%">
+        <select class="form-control aqq" ng-model="selected" ng-options="option.name for option in apps track by option.id" ng-change="loading()">
+        </select>
+      </div>
+    </div>
+
+    <div class="tn aol">
+      <input type="text" value="01/01/15 - 01/08/15" class="form-control" data-provide="datepicker">
+      <i class="fa fa-search bv"></i>
     </div>
   </div>
 
+  <div class="ud">
+    <div class="eg">
 
+      <div id="main" style="height:400px;width: 100%"></div>
+    </div>
+
+  </div>
 </div>
+
+
 {% endblock %}
 
 
@@ -20,17 +43,113 @@
 
 <script>
 
-  angular.module('homeApp', [])
-    .controller('homeController', function ($scope, $http) {
-      $scope.users = {
-      {
-        login_user | json | safe
+  angular.module('download_day_rpt_app', [])
+    .controller('download_day_rpt_app_controller', function ($scope, $http) {
+
+      document.body.style.setProperty('background-color', 'white');
+
+      $scope.apps = {{apps | json | safe}};
+      $scope.selected = $scope.apps[0];
+
+
+
+
+      $scope.loading = function() {
+        $http.get('/rpt/download/' + $scope.selected.id).then(function(data) {
+          var options = handlData(data.data.data);
+          var myChart = echarts.init(document.getElementById('main'));
+          myChart.setOption(options);
+        });
+      };
+
+
+      function handlData(data) {
+
+        console.log('data: ', data);
+
+        var day_arr = data.map(function(d) {
+          return d.day;
+        });
+
+        var market_data = {};
+
+        data.map(function(d) {
+          d.data.map(function(m) {
+            market_data[m.market_id] = market_data[m.market_id] || {};
+            market_data[m.market_id].added = market_data[m.market_id].added || [];
+            market_data[m.market_id].added.push(m.added);
+            market_data[m.market_id].id  = m.market_id;
+            market_data[m.market_id].name = m.name;
+          });
+        });
+
+        var data_arr = [];
+
+        for(var key in market_data) {
+          data_arr.push(market_data[key]);
+        }
+
+        return {
+          title: {
+            text: '每日下载量走势',
+            subtext: ''
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: data_arr.map(function(m) {
+              return m.name
+            })
+          },
+          toolbox: {
+            show: true,
+            feature: {
+              mark: {show: true},
+              dataView: {show: true, readOnly: false},
+              magicType: {show: true, type: ['line', 'bar']},
+              restore: {show: true},
+              saveAsImage: {show: true}
+            }
+          },
+          calculable: true,
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: day_arr
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value',
+              axisLabel: {
+                formatter: '{value}'
+              }
+            }
+          ],
+          series: data_arr.map(function(d) {
+            return {
+              name: d.name,
+              type: 'line',
+              data: d.added,
+              markPoint: {
+                data: [
+                  {type: 'max', name: '最大值'},
+                  {type: 'min', name: '最小值'}
+                ]
+              },
+              markLine: {
+                data: [
+                  {type: 'average', name: '平均值'}
+                ]
+              }
+            }
+          })
+        };
       }
-    };
-  $scope.status = $scope.users.status ? false : true;
 
-  $scope.unverify = $scope.users.status ? true : false;
-  })
-
+    $scope.loading();
+  });
 
 </script>

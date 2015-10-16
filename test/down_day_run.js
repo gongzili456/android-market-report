@@ -1,4 +1,4 @@
 "use strict";
 
 require('babel/register');
-require('./index');
+require('./down_day');

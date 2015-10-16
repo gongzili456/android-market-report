@@ -1,4 +1,4 @@
-export default function(sequelize, DataTypes) {
+export default function (sequelize, DataTypes) {
 
   var download = sequelize.define('Download', {
     id: {
@@ -9,6 +9,7 @@ export default function(sequelize, DataTypes) {
     },
     market_app_id: DataTypes.INTEGER,
     download_total: DataTypes.INTEGER,
+    added: DataTypes.INTEGER
   }, {
     timestamps: true,
     tableName: 'rpt_download',

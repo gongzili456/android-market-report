@@ -37,11 +37,14 @@ export default ()=> {
   router.delete('/apps/:id', authentication, controllers.apps_controller.delApp);
 
   /**
+   * RPT
+   */
+  router.get('/rpt/download/:id', authentication, controllers.rpt_controller.downloadCount);
+
+  /**
    * Home routers
    */
-  router.get('/', authentication, function *() {
-    this.body = yield this.render('home/index');
-  });
+  router.get('/', authentication, controllers.home_controller.index);
 
   return router;
 };
