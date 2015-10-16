@@ -52,8 +52,7 @@ gulp.task('bower_libs', function() {
     BOWER_COMPONENTS + 'remarkable-bootstrap-notify/dist/bootstrap-notify.min.js',
     BOWER_COMPONENTS + 'jQuery/dist/jquery.min.map',
     BOWER_COMPONENTS + 'tablesorter/dist/js/jquery.tablesorter.min.js',
-    BOWER_COMPONENTS + 'echarts/build/dist/echarts-all.js',
-    BOWER_COMPONENTS + 'echarts/build/dist/chart/*'
+    BOWER_COMPONENTS + 'echarts/build/dist/echarts-all.js'
   ]).pipe(gulp.dest(BUILD + 'js'));
   gulp.src(BOWER_COMPONENTS + 'fontawesome/css/font-awesome.min.css')
     .pipe(gulp.dest(BUILD + 'css'));
