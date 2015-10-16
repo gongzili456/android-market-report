@@ -89,6 +89,27 @@
           data_arr.push(market_data[key]);
         }
 
+        var series = data_arr.map(function(d) {
+          return {
+            name: d.name,
+            type: 'line',
+            data: d.added,
+            markPoint: {
+              data: [
+                {type: 'max', name: '最大值'},
+                {type: 'min', name: '最小值'}
+              ]
+            },
+            markLine: {
+              data: [
+                {type: 'average', name: '平均值'}
+              ]
+            }
+          }
+        });
+
+        console.log('series: ', series);
+        
         return {
           title: {
             text: '每日下载量走势',
@@ -128,24 +149,7 @@
               }
             }
           ],
-          series: data_arr.map(function(d) {
-            return {
-              name: d.name,
-              type: 'line',
-              data: d.added,
-              markPoint: {
-                data: [
-                  {type: 'max', name: '最大值'},
-                  {type: 'min', name: '最小值'}
-                ]
-              },
-              markLine: {
-                data: [
-                  {type: 'average', name: '平均值'}
-                ]
-              }
-            }
-          })
+          series:
         };
       }
 
